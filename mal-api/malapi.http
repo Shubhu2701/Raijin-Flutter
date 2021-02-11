@@ -1,0 +1,9 @@
+GET https://myanimelist.net/v1/oauth2/authorize?
+response_type=code
+&client_id=432315dd5df0613763e13c4a2ec9fdff
+&state=Oauth2.0
+
+&code_challenge=
+&code_challenge_method=plain 
+HTTP/1.1
+Host: YOUR_HOST_URL
