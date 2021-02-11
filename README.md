@@ -1,6 +1,7 @@
-# Mal
+# Raijin
 
 A new Flutter project.
+Raijin an Unofficial MyAnimeList android app made with Flutter and Jikan API.
 
 ## Getting Started
 
