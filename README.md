@@ -1,4 +1,5 @@
-![Raijin](https://github.com/Shubhu2701/Raijin-Flutter/blob/assets/launcher/icon.png?raw=true)
+![icon](https://user-images.githubusercontent.com/50752992/107628722-0d08d700-6c87-11eb-9181-ebfb1f49930c.png)
+
 # Raijin
 
 A new Flutter project.
