@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jikan_api/jikan_api.dart';
-import 'package:Mal/Pages/animeInfo.dart';
+import 'package:Raijin/Pages/animeInfo.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SearchPage extends StatefulWidget {
