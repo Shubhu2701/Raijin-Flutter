@@ -1,10 +1,10 @@
-import 'package:Mal/Pages/searchPage.dart';
-import 'package:Mal/Pages/top.dart';
+import 'package:Raijin/Pages/searchPage.dart';
+import 'package:Raijin/Pages/top.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jikan_api/jikan_api.dart';
-import 'package:Mal/Pages/animeInfo.dart';
-import 'package:Mal/Pages/drawer.dart';
+import 'package:Raijin/Pages/animeInfo.dart';
+import 'package:Raijin/Pages/drawer.dart';
 
 class Homepage extends StatefulWidget {
   Homepage();

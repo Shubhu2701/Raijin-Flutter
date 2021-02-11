@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Mal/Pages/settings.dart';
+import 'package:Raijin/Pages/settings.dart';
 
 class Drar extends StatelessWidget {
   Drar();
