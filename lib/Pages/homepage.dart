@@ -1,5 +1,7 @@
+import 'package:Raijin/Pages/mangaTop.dart';
 import 'package:Raijin/Pages/searchPage.dart';
 import 'package:Raijin/Pages/top.dart';
+import 'package:Raijin/Pages/topHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jikan_api/jikan_api.dart';
@@ -224,7 +226,14 @@ class _HomepageState extends State<Homepage> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return TopHome(topAirData, true);
+                        }),
+                      );
+                    },
                     child: Card(
                       child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -270,7 +279,7 @@ class _HomepageState extends State<Homepage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return TopPage(false);
+                            return TopPage();
                           }),
                         );
                       },
@@ -293,7 +302,7 @@ class _HomepageState extends State<Homepage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return TopPage(true);
+                            return TopPageManga();
                           }),
                         );
                       },
@@ -331,7 +340,14 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return TopHome(topUpcoming, false);
+                          }),
+                        );
+                      },
                       child: Card(
                         child: ClipRRect(
                             borderRadius:

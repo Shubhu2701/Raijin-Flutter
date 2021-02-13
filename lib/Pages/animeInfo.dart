@@ -20,130 +20,7 @@ class _AnimePageState extends State<AnimePage> {
     'On Hold',
     'Dropped'
   ];
-  // Widget relatedTemp(var anime){
-  //   ListView.builder(
-  //       scrollDirection: Axis.horizontal,
-  //       itemCount: 15,
-  //       itemBuilder: (context, index) {
-  //         return Padding(
-  //           padding: const EdgeInsets.fromLTRB(2, 4, 1, 4),
-  //           child: SizedBox(
-  //             width: 130,
-  //             child: Card(
-  //               shape: RoundedRectangleBorder(
-  //                   borderRadius: BorderRadius.all(Radius.circular(6.0))),
-  //               elevation: 10,
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.push(
-  //                       context,
-  //                       MaterialPageRoute(builder: (context) {
-  //                         return AnimePage(anime[index].malId);
-  //                       }),
-  //                     );
-  //                   },
-  //                   child: Column(children: [
-  //                     ClipRRect(
-  //                       borderRadius: BorderRadius.only(
-  //                         topLeft: Radius.circular(6.0),
-  //                         topRight: Radius.circular(6.0),
-  //                       ),
-  //                       child: Stack(children: [
-  //                         Image.network(
-  //                           animeData[index].imageUrl,
-  //                           fit: BoxFit.cover,
-  //                           width: 130,
-  //                           height: 160,
-  //                         ),
-  //                         Align(
-  //                             alignment: Alignment.topRight,
-  //                             child: Padding(
-  //                               padding: const EdgeInsets.fromLTRB(0, 4, 8, 0),
-  //                               child: Stack(children: [
-  //                                 Text(
-  //                                   animeData[index].type,
-  //                                   style: TextStyle(
-  //                                       //color: Colors.white,
-  //                                       fontFamily: 'Nunito',
-  //                                       fontWeight: FontWeight.bold,
-  //                                       foreground: Paint()
-  //                                         ..style = PaintingStyle.stroke
-  //                                         ..strokeWidth = 1
-  //                                         ..color = Colors.black,
-  //                                       shadows: [
-  //                                         Shadow(
-  //                                           blurRadius: 15.0,
-  //                                           color: Colors.black,
-  //                                           offset: Offset(0, 0),
-  //                                         ),
-  //                                         Shadow(
-  //                                           blurRadius: 15.0,
-  //                                           color: Colors.black,
-  //                                           offset: Offset(0, 0),
-  //                                         ),
-  //                                         Shadow(
-  //                                           blurRadius: 15.0,
-  //                                           color: Colors.black,
-  //                                           offset: Offset(0, 0),
-  //                                         ),
-  //                                       ]),
-  //                                 ),
-  //                                 Text(animeData[index].type,
-  //                                     style: TextStyle(
-  //                                       color: Colors.white,
-  //                                       fontFamily: 'Nunito',
-  //                                       fontWeight: FontWeight.bold,
-  //                                     ))
-  //                               ]),
-  //                             ))
-  //                       ]),
-  //                     ),
-  //                     Align(
-  //                       alignment: Alignment.topLeft,
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
-  //                         child: Text(
-  //                           animeData[index].title,
-  //                           style: TextStyle(
-  //                               fontFamily: 'Nunito',
-  //                               fontSize: 12,
-  //                               fontWeight: FontWeight.bold),
-  //                           overflow: TextOverflow.ellipsis,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Align(
-  //                       alignment: Alignment.topLeft,
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.start,
-  //                           children: [
-  //                             Icon(
-  //                               Icons.grade,
-  //                               size: 14,
-  //                               color: Colors.yellow[900],
-  //                             ),
-  //                             Text(
-  //                               anime.[index].score == 0.0
-  //                                   ? 'Score : ' + 'N/A'
-  //                                   : 'Score : ' +
-  //                                       animeData[index].score.toString(),
-  //                               style: TextStyle(
-  //                                   fontFamily: 'Nunito',
-  //                                   fontSize: 11,
-  //                                   fontWeight: FontWeight.w500),
-  //                             ),
-  //                           ],
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ])),
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
+
   Widget namesTemp(names) {
     return Text(
       '' + names.name.toString() + ' ',
@@ -488,6 +365,34 @@ class _AnimePageState extends State<AnimePage> {
                             children: animeInfo.genres
                                 .map<Widget>((genre) => genreTemp(genre))
                                 .toList()),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: ExpansionTile(
+                            title: Text(
+                              'Synopsis',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Nunito',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
+                                child: Text(
+                                  animeInfo.synopsis,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Nunito',
+                                    fontSize: 13.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       Padding(
                         //Title Synonyms
