@@ -1,20 +1,18 @@
-import 'package:Raijin/Pages/relatedAnime.dart';
-import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jikan_api/jikan_api.dart';
+import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 
-class AnimePage extends StatefulWidget {
+class MangaPage extends StatefulWidget {
   final int animeId;
-  AnimePage(this.animeId);
+  MangaPage(this.animeId);
   @override
-  _AnimePageState createState() => _AnimePageState();
+  _MangaPageState createState() => _MangaPageState();
 }
 
-class _AnimePageState extends State<AnimePage> {
+class _MangaPageState extends State<MangaPage> {
   var animeInfo;
   String listStats;
-  var relatedAnime;
 
   List<String> listOptions = [
     'Plan to Watch',
@@ -23,9 +21,6 @@ class _AnimePageState extends State<AnimePage> {
     'On Hold',
     'Dropped'
   ];
-  Widget related(man) {
-    return Relate(man);
-  }
 
   Widget namesTemp(names) {
     return Text(
@@ -58,20 +53,22 @@ class _AnimePageState extends State<AnimePage> {
     );
   }
 
+  var relate;
   void getAnimeInfo() async {
     var jikan = Jikan();
-    var anime = await jikan.getAnimeInfo(widget.animeId);
+    var anime = await jikan.getMangaInfo(widget.animeId);
 
     setState(() {
       animeInfo = anime;
     });
-    print(animeInfo.related.sequel);
   }
 
   @override
   void initState() {
     // TODO: implement initState
+
     getAnimeInfo();
+
     super.initState();
   }
 
@@ -287,10 +284,22 @@ class _AnimePageState extends State<AnimePage> {
                                           ),
                                         ]),
                                         Text(
-                                          animeInfo.episodes == null
-                                              ? 'Episodes : ' + 'N/A'
-                                              : 'Episodes : ' +
-                                                  animeInfo.episodes.toString(),
+                                          animeInfo.chapters == null
+                                              ? 'Chapters : ' + 'N/A'
+                                              : 'Chapters : ' +
+                                                  animeInfo.chapters.toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Nunito',
+                                            fontSize: 15,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          animeInfo.volumes == null
+                                              ? 'Volumes : ' + 'N/A'
+                                              : 'Volumes : ' +
+                                                  animeInfo.volumes.toString(),
                                           style: TextStyle(
                                             fontFamily: 'Nunito',
                                             fontSize: 15,
@@ -300,15 +309,6 @@ class _AnimePageState extends State<AnimePage> {
                                         ),
                                         Text(
                                           'Status : ' + animeInfo.status,
-                                          style: TextStyle(
-                                            fontFamily: 'Nunito',
-                                            fontSize: 15,
-                                          ),
-                                          textAlign: TextAlign.start,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          'Duration : ' + animeInfo.duration,
                                           style: TextStyle(
                                             fontFamily: 'Nunito',
                                             fontSize: 15,
@@ -378,15 +378,17 @@ class _AnimePageState extends State<AnimePage> {
                               Icons.expand_more,
                               color: const Color(0xFF707070),
                             ),
-                            header: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Synopsis',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Nunito',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                            header: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Synopsis',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Nunito',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                             children: <Widget>[
@@ -578,7 +580,7 @@ class _AnimePageState extends State<AnimePage> {
                                 ),
                                 Row(children: [
                                   Text(
-                                    'Source : ',
+                                    'Published : ',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Nunito',
@@ -586,390 +588,39 @@ class _AnimePageState extends State<AnimePage> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    animeInfo.source,
+                                    animeInfo.published.string,
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'Nunito',
                                       fontSize: 13,
                                     ),
                                   ),
-                                ]),
-                                Row(children: [
-                                  Text(
-                                    'Aired : ',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    animeInfo.aired.string,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Nunito',
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ]),
-                                Row(children: [
-                                  Text(
-                                    'Rating : ',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    animeInfo.rating,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Nunito',
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ]),
-                                Row(children: [
-                                  Text(
-                                    'Premiered : ',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  animeInfo.premiered == null
-                                      ? Text(
-                                          'N/A',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 13,
-                                          ),
-                                        )
-                                      : Text(
-                                          animeInfo.premiered,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                ]),
-                                Row(children: [
-                                  Text(
-                                    'Broadcast : ',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  animeInfo.broadcast == null
-                                      ? Text(
-                                          'N/A',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 13,
-                                          ),
-                                        )
-                                      : Text(
-                                          animeInfo.broadcast + '',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 13,
-                                          ),
-                                        ),
                                 ]),
                                 Text(
-                                  'Studios : ',
+                                  'Authors : ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'Nunito',
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                for (var name in animeInfo.studios)
+                                for (var name in animeInfo.authors)
                                   (namesTemp(name)),
                                 Text(
-                                  'Producers : ',
+                                  'Serialization : ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'Nunito',
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                for (var name in animeInfo.producers)
-                                  (namesTemp(name)),
-                                Text(
-                                  'Licensors : ',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Nunito',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                for (var name in animeInfo.licensors)
+                                for (var name in animeInfo.serializations)
                                   (namesTemp(name)),
                               ],
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Text(
-                                      'Related : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  if (animeInfo.related.parentStory != null)
-                                    Text(
-                                      'Parent Story : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.parentStory != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.parentStory)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.fullStory != null)
-                                    Text(
-                                      'Full Story : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.fullStory != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.fullStory)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.prequel != null)
-                                    Text(
-                                      'Prequel : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.prequel != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.prequel)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.sequel != null)
-                                    Text(
-                                      'Sequel : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.sequel != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.sequel)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.sideStory != null)
-                                    Text(
-                                      'Side Story : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.sideStory != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.sideStory)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.character != null)
-                                    Text(
-                                      'Character : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.character != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.character)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.alternativeSetting !=
-                                      null)
-                                    Text(
-                                      'Alternative Setting : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.alternativeSetting !=
-                                      null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name in animeInfo
-                                              .related.alternativeSetting)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.alternativeVersion !=
-                                      null)
-                                    Text(
-                                      'Alternative Version : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.alternativeVersion !=
-                                      null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name in animeInfo
-                                              .related.alternativeVersion)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.spinOff != null)
-                                    Text(
-                                      'Spin Off : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.spinOff != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.spinOff)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.summary != null)
-                                    Text(
-                                      'Summary : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.summary != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.summary)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                  if (animeInfo.related.other != null)
-                                    Text(
-                                      'Other : ',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  if (animeInfo.related.other != null)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          for (var name
-                                              in animeInfo.related.other)
-                                            (related(name)),
-                                        ],
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            )),
-                      )
                     ],
                   ),
                 ),
