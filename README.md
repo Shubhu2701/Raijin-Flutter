@@ -5,5 +5,5 @@
 A new Flutter project.
 Raijin an Unofficial MyAnimeList android app made with Flutter and Jikan API.
 
-APK : https://cutt.ly/0kZJzEY
+APK : https://cutt.ly/blGD5nK
 
